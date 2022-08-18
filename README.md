@@ -35,3 +35,16 @@ I've spent the last 10 years of my personal time helping SMBs manage Quickbooks 
 * Collect recent/old qbdbm RPMs (and DEB files via Alien) and upload them to a dist/ folder.
 * Wrap qbdbmgrn/qbdbfilemon/samba into a Docker container and k8s Helm chart
 * Release updated versions of qbdbmgrn/qbdbfilemon (for example for Quickbooks Enterprise 2022)
+
+## Step By Step functionality of Linux QBES
+* End-User double-clicks on company file from mapped drive or otherwise opens company file from Samba network share
+* QB Desktop Enterprise uses the server name of the network share and contacts port that is bound by qbmonitord (qbdbfilemon)
+** qbdbfilemon maintains a qbdata.dat file that maintains network connectivity information, and creates/manages ND files that maintain metadata for each company file that is opened.
+* qbmonitord then greps ps output for qbdbmgrn_XX (where XX is 'Internal QB Version Number') and looks for the port or port range qbdbmgrn has bound, and returns this information to QB Desktop
+* QB Desktop then uses this new port/connection to maintain consistency between mutliple users (multi-user mode), likely through some bizarre process that is likely completely insane.
+
+## Common Issues 
+* H202 Error - check qbmonitord log output or `journalctl -u qbdbfilemon` to look for error messages. 
+* -6190,-77 - Ensure all users of QB Enterprise have the network drive mapped and are being used the same way. qbdbfilemon/qbdbmgrn cannot support DNS names and IP mappings
+* -6190,-83 - Ensure all users can read/write files (including ND and other metadata files) on the network share. This typically indicates some permission/ownership issue with Samba.
+* -6190,-816 - I restarted both qbdbmgrn/qbdbfilemon and this went away.
