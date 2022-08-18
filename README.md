@@ -44,7 +44,10 @@ I've spent the last 10 years of my personal time helping SMBs manage Quickbooks 
 * QB Desktop then uses this new port/connection to maintain consistency between mutliple users (multi-user mode), likely through some bizarre process that is likely completely insane.
 
 ## Common Issues 
-* H202 Error - check qbmonitord log output or `journalctl -u qbdbfilemon` to look for error messages. 
+* H202 Error - 
+** Check firewall to make sure all proper ports are opened
+** Check that qbdbfilemon and qbdbmgrn_XX are running
+** Check logs, especially when attempting multi-user mode. Look for errors in grep output for `port=`. This is how I found out that QBES 2022 doesn't work with the "latest available" release of qbdbm RPM, and inspired this repo.
 * -6190,-77 - Ensure all users of QB Enterprise have the network drive mapped and are being used the same way. qbdbfilemon/qbdbmgrn cannot support DNS names and IP mappings
 * -6190,-83 - Ensure all users can read/write files (including ND and other metadata files) on the network share. This typically indicates some permission/ownership issue with Samba.
 * -6190,-816 - I restarted both qbdbmgrn/qbdbfilemon and this went away.
