@@ -34,7 +34,7 @@ I've spent the last 10 years of my personal time helping SMBs manage Quickbooks 
 ## Future Plans
 * Collect recent/old qbdbm RPMs (and DEB files via Alien) and upload them to a dist/ folder.
 * Wrap qbdbmgrn/qbdbfilemon/samba into a Docker container and k8s Helm chart
-* -Release updated versions of qbdbmgrn/qbdbfilemon (for example for Quickbooks Enterprise 2022)-
+* ~Release updated versions of qbdbmgrn/qbdbfilemon (for example for Quickbooks Enterprise 2022)~
   * This didn't end up working. There's enough differences between 2021 and 2022 from an API level that multi-user doesn't actually work.
 
 ## Step By Step functionality of Linux QBES
